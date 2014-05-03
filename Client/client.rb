@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 require 'socket'
+require 'scanf'
+
 # establish connection
 ## We need to tell the client where to connect
 ## Conveniently it is on localhost at port 2008!
@@ -19,6 +21,33 @@ clientSession.puts "Client: Hello Server World!\n"
           (serverMessage = clientSession.gets)
   ## lets output our server messages
   puts serverMessage
+
+  # if serverMessage.include?("Printing Board")
+  # 	$printBoard = true
+  # 	for i in 0..9 do
+		# 	for j in 0..9 do
+		# 		print @board[i][j]
+		# 		print " "
+		# 		STDOUT.flush
+		# 	end
+		# 	puts "\n"
+		# end
+  # end
+
+  if serverMessage.include?("Select Start Position for Carrier")
+  	input = scanf("%s")
+
+  	# will need to parse for bs moves later
+  	clientSession.puts input
+  end
+
+  if serverMessage.include?("Select Orientation for Carrier")
+  	input = scanf("%s")
+
+  	# will need to parse for bs moves later
+  	clientSession.puts input
+  end
+
   #if one of the messages contains 'Goodbye' we'll disconnect
   ## we disconnect by 'closing' the session.
   if serverMessage.include?("Goodbye")
