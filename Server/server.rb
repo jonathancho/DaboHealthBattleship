@@ -83,23 +83,36 @@ class Match
 # fixed_str[0]=='-' ? -result : result
 # end
 
-	def placeboat(location, orientation)
-		puts "sdfihudsfwhdsfgikdsgkni"
+	def placeboat(location, orientation, size)
+		lastIndex = size - 1
+
 		number = location[1]
 		letter = location[0]
 		row = number.to_i - 1
 		column = letter.ord - 65
 
 		if orientation == "Up"
+			for i in 0..lastIndex do
+				@board[row - i][column] = lastIndex
+			end
 		end
 
 		if orientation == "Down"
+			for i in 0..lastIndex do
+				@board[row + i][column] = lastIndex
+			end
 		end
 
 		if orientation == "Left"
+			for i in 0..lastIndex do
+				@board[row][column - i] = lastIndex
+			end
 		end
 
 		if orientation == "Right"
+			for i in 0..lastIndex do
+				@board[row][column + i] = lastIndex
+			end
 		end
 
 		puts letter
@@ -125,7 +138,10 @@ class Match
 		puts orientation1
 		puts orientation2
         
-        placeboat(input1, orientation1)
+		
+
+        placeboat(input1, orientation1.chomp, 5)
+        placeboat(input2, orientation2.chomp, 5)
 		#carrier is now placed print the board to represent the new state
 		printboard
 
