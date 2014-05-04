@@ -24,11 +24,15 @@ class Match
 		puts "match initialize called\n"
 		@player1 = player1
 		@player2 = player2
-		@board = SparseArray.new()
+		@board1 = SparseArray.new()
+		@board2 = SparseArray.new()
+		@numboats1 = 5
+		@numboats2 = 5
 
 		for i in 0..9 do
 			for j in 0..9 do
-				@board[i][j] = 0
+				@board1[i][j] = '-'
+				@board2[i][j] = '-'
 			end
 		end
 		#@board[3][7] = 7
@@ -53,9 +57,9 @@ class Match
 		$j = 0
 		while $i < 10 do
 			while $j < 10 do
-				@player1.print @board[$i][$j]
+				@player1.print @board1[$i][$j]
 				@player1.print " "
-				@player2.print @board[$i][$j]
+				@player2.print @board2[$i][$j]
 				@player2.print " "
 				@player1.flush
 				@player2.flush
@@ -71,19 +75,49 @@ class Match
 		#@player2.puts "Printing Board\n"
 	end
 
-# 	def atoi(str)
-# return str if !str.is_a? String
- 
-# fixed_str = fix(str)
- 
-# result = 0
-# fixed_str.each_char do |c|
-# result = result*10 + c.to_i
-# end
-# fixed_str[0]=='-' ? -result : result
-# end
+	def player1turn()
+		@player1.puts "Select a Spot to Fire (Ranges are A - L and 1 - 10 Example: B5)"
+		@player2.puts "Player 1 is taking a shot, Please wait..."
+		input1 = @player1.gets
 
-	def placeboat(location, orientation, size)
+		number = input1[1]
+		letter = input1[0]
+		row = number.to_i - 1
+		column = letter.ord - 65
+
+		#hits nothing
+		if @board2[row][column] == '-'
+			@player1.puts "Shot Missed!"
+			@player2.puts "Player 1 shot at #{input1} and missed!"
+		else
+			@player1.puts "Shot Hit!"
+			@player2.puts "Player 1 shot at #{input1} and hit!"
+		end
+		@board2[row][column] = 'x'
+	end
+
+	def player2turn()
+		@player2.puts "Select a Spot to Fire (Ranges are A - L and 1 - 10 Example: B5)"
+		@player1.puts "Player 2 is taking a shot, Please wait..."
+		input1 = @player2.gets
+
+		number = input1[1]
+		letter = input1[0]
+		row = number.to_i - 1
+		column = letter.ord - 65
+
+		#hits nothing
+		if @board1[row][column] == '-'
+			@player2.puts "Shot Missed!"
+			@player1.puts "Player 2 shot at #{input1} and missed!"
+		else
+			@player2.puts "Shot Hit!"
+			@player1.puts "Player 2 shot at #{input1} and hit!"
+		end
+		@board1[row][column] = 'x'
+	end
+
+	def placeboat(location, orientation, size, board, type)
 		lastIndex = size - 1
 
 		number = location[1]
@@ -93,25 +127,25 @@ class Match
 
 		if orientation == "Up"
 			for i in 0..lastIndex do
-				@board[row - i][column] = lastIndex
+				board[row - i][column] = type
 			end
 		end
 
 		if orientation == "Down"
 			for i in 0..lastIndex do
-				@board[row + i][column] = lastIndex
+				board[row + i][column] = type
 			end
 		end
 
 		if orientation == "Left"
 			for i in 0..lastIndex do
-				@board[row][column - i] = lastIndex
+				board[row][column - i] = type
 			end
 		end
 
 		if orientation == "Right"
 			for i in 0..lastIndex do
-				@board[row][column + i] = lastIndex
+				board[row][column + i] = type
 			end
 		end
 
@@ -140,47 +174,109 @@ class Match
         
 		
 
-        placeboat(input1, orientation1.chomp, 5)
-        placeboat(input2, orientation2.chomp, 5)
+        placeboat(input1, orientation1.chomp, 5, @board1, 'c')
+        placeboat(input2, orientation2.chomp, 5, @board2, 'c')
 		#carrier is now placed print the board to represent the new state
 		printboard
 
-		@player1.puts "Select Start Position for Battleship (Size 4) (Ranges are A - L and 1 - 10 Example: B5)"
-		@player2.puts "Select Start Position for Battleship (Size 4) (Ranges are A - L and 1 - 10 Example: B5)"
+		# @player1.puts "Select Start Position for Battleship (Size 4) (Ranges are A - L and 1 - 10 Example: B5)"
+		# @player2.puts "Select Start Position for Battleship (Size 4) (Ranges are A - L and 1 - 10 Example: B5)"
 
-		input1 = @player1.gets
-		input2 = @player2.gets
-		puts input1
-		puts input2
+		# input1 = @player1.gets
+		# input2 = @player2.gets
+		# puts input1
+		# puts input2
 
-		@player1.puts "Select Orientation for Battleship (Size 4) (Up, Down, Left, Right)"
-		@player2.puts "Select Orientation for Battleship (Size 4) (Up, Down, Left, Right)"
+		# @player1.puts "Select Orientation for Battleship (Size 4) (Up, Down, Left, Right)"
+		# @player2.puts "Select Orientation for Battleship (Size 4) (Up, Down, Left, Right)"
 
-		orientation1 = @player1.gets
-		orientation2 = @player2.gets
-		puts orientation1
-		puts orientation2
+		# orientation1 = @player1.gets
+		# orientation2 = @player2.gets
+		# puts orientation1
+		# puts orientation2
 
-		@player1.puts "Select Start Position for Submarine (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
-		@player2.puts "Select Start Position for Submarine (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
+		# placeboat(input1, orientation1.chomp, 4, @board1)
+  #       placeboat(input2, orientation2.chomp, 4, @board2)
+		# #carrier is now placed print the board to represent the new state
+		# printboard
 
-		input1 = @player1.gets
-		input2 = @player2.gets
-		puts input1
-		puts input2
+		# @player1.puts "Select Start Position for Submarine (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
+		# @player2.puts "Select Start Position for Submarine (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
 
-		@player1.puts "Select Orientation for Submarine (Size 3) (Up, Down, Left, Right)"
-		@player2.puts "Select Orientation for Submarine (Size 3) (Up, Down, Left, Right)"
+		# input1 = @player1.gets
+		# input2 = @player2.gets
+		# puts input1
+		# puts input2
 
-		orientation1 = @player1.gets
-		orientation2 = @player2.gets
-		puts orientation1
-		puts orientation2
+		# @player1.puts "Select Orientation for Submarine (Size 3) (Up, Down, Left, Right)"
+		# @player2.puts "Select Orientation for Submarine (Size 3) (Up, Down, Left, Right)"
+
+		# orientation1 = @player1.gets
+		# orientation2 = @player2.gets
+		# puts orientation1
+		# puts orientation2
+
+		# placeboat(input1, orientation1.chomp, 3, @board1)
+  #       placeboat(input2, orientation2.chomp, 3, @board2)
+		# #carrier is now placed print the board to represent the new state
+		# printboard
+
+		# @player1.puts "Select Start Position for Destroyer (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
+		# @player2.puts "Select Start Position for Destroyer (Size 3) (Ranges are A - L and 1 - 10 Example: B5)"
+
+		# input1 = @player1.gets
+		# input2 = @player2.gets
+		# puts input1
+		# puts input2
+
+		# @player1.puts "Select Orientation for Destroyer (Size 3) (Up, Down, Left, Right)"
+		# @player2.puts "Select Orientation for Destroyer (Size 3) (Up, Down, Left, Right)"
+
+		# orientation1 = @player1.gets
+		# orientation2 = @player2.gets
+		# puts orientation1
+		# puts orientation2
+
+		# placeboat(input1, orientation1.chomp, 3, @board1)
+  #       placeboat(input2, orientation2.chomp, 3, @board2)
+		# #carrier is now placed print the board to represent the new state
+		# printboard
+
+		# @player1.puts "Select Start Position for Patrol Boat (Size 2) (Ranges are A - L and 1 - 10 Example: B5)"
+		# @player2.puts "Select Start Position for Patrol Boat (Size 2) (Ranges are A - L and 1 - 10 Example: B5)"
+
+		# input1 = @player1.gets
+		# input2 = @player2.gets
+		# puts input1
+		# puts input2
+
+		# @player1.puts "Select Orientation for Patrol Boat (Size 2) (Up, Down, Left, Right)"
+		# @player2.puts "Select Orientation for Patrol Boat (Size 2) (Up, Down, Left, Right)"
+
+		# orientation1 = @player1.gets
+		# orientation2 = @player2.gets
+		# puts orientation1
+		# puts orientation2
+
+		# placeboat(input1, orientation1.chomp, 2, @board1)
+  #       placeboat(input2, orientation2.chomp, 2, @board2)
+		# #carrier is now placed print the board to represent the new state
+		# printboard
+
+		while @numboats1 > 0 && @numboats2 > 0 do
+			puts "next phase!!!"
+			player1turn()
+			player2turn()
+		end
 	end
 
 	@player1
 	@player2
-	@board
+	@board1
+	@board2
+	@numboats1
+	@numboats2
+	
 end
 
 puts "Starting up server..."

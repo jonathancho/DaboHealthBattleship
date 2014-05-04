@@ -34,14 +34,7 @@ clientSession.puts "Client: Hello Server World!\n"
 		# end
   # end
 
-  if serverMessage.include?("Select Start Position for Carrier")
-  	input = scanf("%s")
-
-  	# will need to parse for bs moves later
-  	clientSession.puts input
-  end
-
-  if serverMessage.include?("Select Orientation for Carrier")
+  if serverMessage.include?("Select")
   	input = scanf("%s")
 
   	# will need to parse for bs moves later
