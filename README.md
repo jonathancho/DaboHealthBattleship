@@ -1,7 +1,7 @@
 DaboHealthBattleship
 ====================
 
-This is a battleship game I implemented using ruby. This was my first time using ruby so I'm sure there were many things I could've done better. Overall, I spent about 1 and a half - 2 days on this project. I would've liked to spent more time to improve it but I have to leave on a trip.
+This is a battleship game I implemented using ruby. This was my first time using ruby so I'm sure there were many things I could've done better. Overall, I spent about 1 and a half - 2 days on this project including time spent researching ruby. I would've liked to spent more time to refactor / add features but I have to leave on a trip.
 
 How to Play
 ====================

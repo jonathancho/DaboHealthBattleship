@@ -72,43 +72,11 @@ class Match
 				@player2.flush
 		end
 
-		@player1.puts "\n"
-		@player2.puts "\n"
-
-		while $i < 10 do
-			while $j < 10 do
-				if $j == 0
-					@player1.print $i + 1
-					@player1.print " "
-					@player2.print $i + 1
-					@player2.print " "
-					@player1.flush
-					@player2.flush
-				end
-					@player1.print @board1[$i][$j]
-					@player1.print " "
-					@player2.print @board2[$i][$j]
-					@player2.print " "
-					@player1.flush
-					@player2.flush
-				$j +=1
-			end
-			@player1.puts "\n"
-			@player2.puts "\n"
-			$j = 0
-			$i +=1
-		end
-
-		#print out second board
-		$i = 0
-		$j = 0
-
-		@player1.print "  "
-		@player2.print "  "
+		@player1.print "     "
+		@player2.print "     "
 		@player1.flush
 		@player2.flush
 
-		# A - J
 		for j in 65..74 do
 				@player1.print j.chr
 				@player1.print " "
@@ -122,21 +90,40 @@ class Match
 		@player2.puts "\n"
 
 		while $i < 10 do
-			while $j < 10 do
-				if $j == 0
+			while $j < 20 do
+				if $j == 0 || $j == 10
+					# spacing between two boards
+					if $j == 10
+						@player1.print "   "
+						@player2.print "   "
+					end
+
 					@player1.print $i + 1
-					@player1.print " "
 					@player2.print $i + 1
+					# formatting for number 10
+					if $i + 1 != 10
+						@player1.print " "
+						@player2.print " "
+					end
+
+					@player1.flush
+					@player2.flush
+				end
+				if $j > 9 # second board
+					@player1.print @trackboard1[$i][$j - 10]
+					@player1.print " "
+					@player2.print @trackboard2[$i][$j - 10]
+					@player2.print " "
+					@player1.flush
+					@player2.flush
+				else # first board
+					@player1.print @board1[$i][$j]
+					@player1.print " "
+					@player2.print @board2[$i][$j]
 					@player2.print " "
 					@player1.flush
 					@player2.flush
 				end
-					@player1.print @trackboard1[$i][$j]
-					@player1.print " "
-					@player2.print @trackboard2[$i][$j]
-					@player2.print " "
-					@player1.flush
-					@player2.flush
 				$j +=1
 			end
 			@player1.puts "\n"
@@ -144,6 +131,52 @@ class Match
 			$j = 0
 			$i +=1
 		end
+
+		# #print out second board
+		# $i = 0
+		# $j = 0
+
+		# @player1.print "  "
+		# @player2.print "  "
+		# @player1.flush
+		# @player2.flush
+
+		# # A - J
+		# for j in 65..74 do
+		# 		@player1.print j.chr
+		# 		@player1.print " "
+		# 		@player2.print j.chr
+		# 		@player2.print " "
+		# 		@player1.flush
+		# 		@player2.flush
+		# end
+
+		# @player1.puts "\n"
+		# @player2.puts "\n"
+
+		# while $i < 10 do
+		# 	while $j < 10 do
+		# 		if $j == 0
+		# 			@player1.print $i + 1
+		# 			@player1.print " "
+		# 			@player2.print $i + 1
+		# 			@player2.print " "
+		# 			@player1.flush
+		# 			@player2.flush
+		# 		end
+		# 			@player1.print @trackboard1[$i][$j]
+		# 			@player1.print " "
+		# 			@player2.print @trackboard2[$i][$j]
+		# 			@player2.print " "
+		# 			@player1.flush
+		# 			@player2.flush
+		# 		$j +=1
+		# 	end
+		# 	@player1.puts "\n"
+		# 	@player2.puts "\n"
+		# 	$j = 0
+		# 	$i +=1
+		# end
 		#@player1.puts @board
 		#@player1.puts "Printing Board\n"
 		#@player2.puts "Printing Board\n"
