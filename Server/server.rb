@@ -66,15 +66,25 @@ class Match
 	def printboard()
 		$i = 0
 		$j = 0
-		while $i < 10 do
-			while $j < 10 do
-				@player1.print @board1[$i][$j]
-				@player1.print " "
-				@player2.print @board2[$i][$j]
-				@player2.print " "
-				@player1.flush
-				@player2.flush
-				$j +=1
+		$letter = 'A'
+		while $i < 11 do
+			while $j < 11 do
+				if $i == 0 && 
+					@player1.print $letter
+					@player1.print " "
+					@player2.print $letter
+					@player2.print " "
+					@player1.flush
+					@player2.flush
+				else
+					@player1.print @board1[$i][$j]
+					@player1.print " "
+					@player2.print @board2[$i][$j]
+					@player2.print " "
+					@player1.flush
+					@player2.flush
+					$j +=1
+				end
 			end
 			@player1.puts "\n"
 			@player2.puts "\n"
