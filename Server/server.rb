@@ -26,6 +26,8 @@ class Match
 		@player2 = player2
 		@board1 = SparseArray.new()
 		@board2 = SparseArray.new()
+		@trackboard1 = SparseArray.new()
+		@trackboard2 = SparseArray.new()
 		@numboats1 = 5
 		@numboats2 = 5
 
@@ -44,6 +46,8 @@ class Match
 			for j in 0..9 do
 				@board1[i][j] = '-'
 				@board2[i][j] = '-'
+				@trackboard1[i][j] = '-'
+				@trackboard2[i][j] = '-'
 			end
 		end
 		puts "match initialize done\n"
@@ -110,6 +114,8 @@ class Match
 		row = number.to_i - 1
 		column = letter.ord - 65
 
+		input1 = input1.chomp
+
 		#hits nothing
 		if @board2[row][column] == '-'
 			@player1.puts "Shot Missed!"
@@ -170,7 +176,7 @@ class Match
 			end
 		end
 		@board2[row][column] = 'x'
-
+		@trackboard1[row][column] = 'x'
 		if @numboats2 == 0
 			@player1.puts "You WIN!!!!!"
 			@player2.puts "You LOSE!!!!!"
@@ -249,7 +255,7 @@ class Match
 			end
 		end
 		@board1[row][column] = 'x'
-
+		@trackboard2[row][column] = 'x'
 		if @numboats1 == 0
 			@player2.puts "You WIN!!!!!"
 			@player1.puts "You LOSE!!!!!"
@@ -416,6 +422,8 @@ class Match
 	@player2
 	@board1
 	@board2
+	@trackboard1
+	@trackboard2
 	@numboats1
 	@numboats2
 	@carrier1
