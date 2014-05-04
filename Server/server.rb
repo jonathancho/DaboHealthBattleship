@@ -56,7 +56,6 @@ class Match
 	def printboard()
 		$i = 0
 		$j = 0
-		$letter = 'A'
 
 		@player1.print "  "
 		@player2.print "  "
@@ -99,6 +98,52 @@ class Match
 			$j = 0
 			$i +=1
 		end
+
+		#print out second board
+		$i = 0
+		$j = 0
+
+		@player1.print "  "
+		@player2.print "  "
+		@player1.flush
+		@player2.flush
+
+		# A - J
+		for j in 65..74 do
+				@player1.print j.chr
+				@player1.print " "
+				@player2.print j.chr
+				@player2.print " "
+				@player1.flush
+				@player2.flush
+		end
+
+		@player1.puts "\n"
+		@player2.puts "\n"
+
+		while $i < 10 do
+			while $j < 10 do
+				if $j == 0
+					@player1.print $i + 1
+					@player1.print " "
+					@player2.print $i + 1
+					@player2.print " "
+					@player1.flush
+					@player2.flush
+				end
+					@player1.print @trackboard1[$i][$j]
+					@player1.print " "
+					@player2.print @trackboard2[$i][$j]
+					@player2.print " "
+					@player1.flush
+					@player2.flush
+				$j +=1
+			end
+			@player1.puts "\n"
+			@player2.puts "\n"
+			$j = 0
+			$i +=1
+		end
 		#@player1.puts @board
 		#@player1.puts "Printing Board\n"
 		#@player2.puts "Printing Board\n"
@@ -120,11 +165,12 @@ class Match
 		if @board2[row][column] == '-'
 			@player1.puts "Shot Missed!"
 			@player2.puts "Player 1 shot at #{input1} and missed!"
+			@trackboard1[row][column] = 'o'
 		elsif @board2[row][column] == 'c'
 			@player1.puts "Shot Hit!"
 			@player2.puts "Player 1 shot at #{input1} and hit!"
 			@carrier2 -= 1
-
+			@trackboard1[row][column] = 'x'
 			if @carrier2 == 0
 				@player1.puts "Player 2's Carrier has been sunk!"
 				@player2.puts "Your Carrier has been destroyed!"
@@ -135,7 +181,7 @@ class Match
 			@player2.puts "Player 1 shot at #{input1} and hit!"
 
 			@battleship2 -= 1
-
+			@trackboard1[row][column] = 'x'
 			if @battleship2 == 0
 				@player1.puts "Player 2's Battleship has been sunk!"
 				@player2.puts "Your Battleship has been destroyed!"
@@ -146,7 +192,7 @@ class Match
 			@player2.puts "Player 1 shot at #{input1} and hit!"
 
 			@submarine2 -= 1
-
+			@trackboard1[row][column] = 'x'
 			if @submarine2 == 0
 				@player1.puts "Player 2's Submarine has been sunk!"
 				@player2.puts "Your Submarine has been destroyed!"
@@ -157,7 +203,7 @@ class Match
 			@player2.puts "Player 1 shot at #{input1} and hit!"
 
 			@destroyer2 -= 1
-
+			@trackboard1[row][column] = 'x'
 			if @destroyer2 == 0
 				@player1.puts "Player 2's Destroyer has been sunk!"
 				@player2.puts "Your Destroyer has been destroyed!"
@@ -168,7 +214,7 @@ class Match
 			@player2.puts "Player 1 shot at #{input1} and hit!"
 
 			@patrolboat2 -= 1
-
+			@trackboard1[row][column] = 'x'
 			if @patrolboat2 == 0
 				@player1.puts "Player 2's Patrol Boat has been sunk!"
 				@player2.puts "Your Patrol Boat has been destroyed!"
@@ -176,7 +222,7 @@ class Match
 			end
 		end
 		@board2[row][column] = 'x'
-		@trackboard1[row][column] = 'x'
+		
 		if @numboats2 == 0
 			@player1.puts "You WIN!!!!!"
 			@player2.puts "You LOSE!!!!!"
@@ -199,11 +245,12 @@ class Match
 		if @board1[row][column] == '-'
 			@player2.puts "Shot Missed!"
 			@player1.puts "Player 2 shot at #{input1} and missed!"
+			@trackboard2[row][column] = 'o'
 		elsif @board1[row][column] == 'c'
 			@player2.puts "Shot Hit!"
 			@player1.puts "Player 2 shot at #{input1} and hit!"
 			@carrier1 -= 1
-
+			@trackboard2[row][column] = 'x'
 			if @carrier1 == 0
 				@player2.puts "Player 1's Carrier has been sunk!"
 				@player1.puts "Your Carrier has been destroyed!"
@@ -214,7 +261,7 @@ class Match
 			@player1.puts "Player 2 shot at #{input1} and hit!"
 
 			@battleship1 -= 1
-
+			@trackboard2[row][column] = 'x'
 			if @battleship1 == 0
 				@player2.puts "Player 1's Battleship has been sunk!"
 				@player1.puts "Your Battleship has been destroyed!"
@@ -225,7 +272,7 @@ class Match
 			@player1.puts "Player 2 shot at #{input1} and hit!"
 
 			@submarine1 -= 1
-
+			@trackboard2[row][column] = 'x'
 			if @submarine1 == 0
 				@player2.puts "Player 1's Submarine has been sunk!"
 				@player1.puts "Your Submarine has been destroyed!"
@@ -236,7 +283,7 @@ class Match
 			@player1.puts "Player 2 shot at #{input1} and hit!"
 
 			@destroyer1 -= 1
-
+			@trackboard2[row][column] = 'x'
 			if @destroyer1 == 0
 				@player2.puts "Player 1's Destroyer has been sunk!"
 				@player1.puts "Your Destroyer has been destroyed!"
@@ -247,7 +294,7 @@ class Match
 			@player1.puts "Player 2 shot at #{input1} and hit!"
 
 			@patrolboat1 -= 1
-
+			@trackboard2[row][column] = 'x'
 			if @patrolboat1 == 0
 				@player2.puts "Player 1's Patrol Boat has been sunk!"
 				@player1.puts "Your Patrol Boat has been destroyed!"
@@ -255,7 +302,7 @@ class Match
 			end
 		end
 		@board1[row][column] = 'x'
-		@trackboard2[row][column] = 'x'
+		
 		if @numboats1 == 0
 			@player2.puts "You WIN!!!!!"
 			@player1.puts "You LOSE!!!!!"
@@ -413,6 +460,7 @@ class Match
 		while @numboats1 > 0 && @numboats2 > 0 do
 			puts "next phase!!!"
 			player1turn()
+			printboard()
 			player2turn()
 			printboard()
 		end
