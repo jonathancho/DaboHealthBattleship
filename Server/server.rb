@@ -46,20 +46,6 @@ class Match
 				@board2[i][j] = '-'
 			end
 		end
-		#@board[3][7] = 7
-		# @board[0][1] = 2
-		# @board[0][2] = 3
-		# @board[0][3] = 4
-		# @board[0][4] = 5
-		# @board[0][5] = 6
-		# @board[0][6] = 7
-		# @board[0][7] = 8
-		# @board[0][8] = 9
-		# @board[0][9] = 10
-		#@board = [[1, 2, 3] [4, 5, 6], [7, 8, 9]]
-		#@board[0][0]= 10;
-		#@board[[0, 1]] = 2;
-		#@board[[0, 2]] = 3;
 		puts "match initialize done\n"
 	end
 
@@ -67,24 +53,42 @@ class Match
 		$i = 0
 		$j = 0
 		$letter = 'A'
-		while $i < 11 do
-			while $j < 11 do
-				if $i == 0 && 
-					@player1.print $letter
+
+		@player1.print "  "
+		@player2.print "  "
+		@player1.flush
+		@player2.flush
+
+		# A - J
+		for j in 65..74 do
+				@player1.print j.chr
+				@player1.print " "
+				@player2.print j.chr
+				@player2.print " "
+				@player1.flush
+				@player2.flush
+		end
+
+		@player1.puts "\n"
+		@player2.puts "\n"
+
+		while $i < 10 do
+			while $j < 10 do
+				if $j == 0
+					@player1.print $i + 1
 					@player1.print " "
-					@player2.print $letter
+					@player2.print $i + 1
 					@player2.print " "
 					@player1.flush
 					@player2.flush
-				else
+				end
 					@player1.print @board1[$i][$j]
 					@player1.print " "
 					@player2.print @board2[$i][$j]
 					@player2.print " "
 					@player1.flush
 					@player2.flush
-					$j +=1
-				end
+				$j +=1
 			end
 			@player1.puts "\n"
 			@player2.puts "\n"
